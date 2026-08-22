@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { ThreeDHero } from '@/components/ThreeDHero'
 
 export default function LoginPage() {
+  console.log('DEBUG_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log('DEBUG_SUPABASE_KEY_EXISTS:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   const [isLoading, setIsLoading] = useState(false)
   
   const supabase = createClient()
