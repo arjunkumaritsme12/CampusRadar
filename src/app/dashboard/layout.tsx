@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-border bg-accent/20 flex flex-col hidden md:flex">
+      <aside className="w-64 border-r border-border bg-accent/20 flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-border">
           <Link className="flex items-center gap-2" href="/">
             <Briefcase className="h-6 w-6 text-primary" />
@@ -75,26 +75,49 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden relative">
-        {/* Mobile Header */}
-        <header className="md:hidden h-16 flex items-center justify-between px-6 border-b border-border bg-background">
+        <header className="md:hidden h-16 flex items-center justify-between px-4 sm:px-6 border-b border-border bg-background/95 backdrop-blur-sm sticky top-0 z-20">
           <Link className="flex items-center gap-2" href="/">
             <Briefcase className="h-6 w-6 text-primary" />
             <span className="font-heading font-bold text-xl">Tracker</span>
           </Link>
-          <button onClick={() => setIsModalOpen(true)} className="p-2 bg-primary text-primary-foreground rounded-lg">
+          <button onClick={() => setIsModalOpen(true)} className="p-2.5 bg-primary text-primary-foreground rounded-xl shadow-sm">
             <Plus className="w-5 h-5" />
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-5 md:p-8 pb-24 md:pb-8">
           {children}
         </div>
+
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-background/95 backdrop-blur-md px-2 py-2">
+          <div className="grid grid-cols-3 gap-2">
+            {links.map((link) => {
+              const Icon = link.icon
+              const isActive = pathname === link.href
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`flex flex-col items-center justify-center gap-1 rounded-xl px-2 py-2 text-[11px] font-medium ${
+                    isActive
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-secondary-foreground hover:bg-accent'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{link.name}</span>
+                </Link>
+              )
+            })}
+          </div>
+        </nav>
       </main>
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
-          <div className="w-full max-w-2xl animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-background/80 backdrop-blur-sm">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-hidden animate-in fade-in zoom-in duration-200">
             <DriveForm onClose={() => setIsModalOpen(false)} />
           </div>
         </div>

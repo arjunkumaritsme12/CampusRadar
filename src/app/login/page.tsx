@@ -14,10 +14,13 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     setIsLoading(true)
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `${appUrl}/auth/callback`,
       },
     })
 

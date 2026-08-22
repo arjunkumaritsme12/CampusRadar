@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, FieldErrors } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { driveSchema, Drive } from '@/lib/schema'
 import { createDrive, updateDrive } from '@/app/actions'
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 
 export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClose?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const router = useRouter()
 
   const {
@@ -30,29 +31,56 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true)
+    setSubmitError(null)
+
     try {
-      if (initialData?.id) {
-        await updateDrive(initialData.id, data as Drive)
+      const normalizedData = {
+        ...data,
+        bond: Boolean(data.bond ?? false),
+        id: initialData?.id ?? data.id ?? undefined,
+      } as Drive
+
+      const driveId = normalizedData.id
+
+      if (driveId) {
+        await updateDrive(driveId, normalizedData)
       } else {
-        await createDrive(data as Drive)
+        await createDrive(normalizedData)
       }
+
       router.refresh()
       if (onClose) onClose()
     } catch (error) {
-      console.error(error)
-      alert('Failed to save drive details.')
+      const message = error instanceof Error ? error.message : 'Failed to save drive details.'
+      console.error('Drive save failed:', error)
+      setSubmitError(message)
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  const onInvalid = (validationErrors: FieldErrors<Drive>) => {
+    const firstError = Object.values(validationErrors)[0]
+    const message = typeof firstError?.message === 'string'
+      ? firstError.message
+      : 'Please fix the form fields and try again.'
+
+    setSubmitError(message)
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 p-6 glass rounded-2xl w-full max-w-2xl mx-auto overflow-y-auto max-h-[90vh] custom-scrollbar">
-      <h2 className="text-2xl font-heading font-bold mb-2">
+    <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="flex flex-col gap-4 sm:gap-5 p-4 sm:p-6 glass rounded-2xl w-full max-w-2xl mx-auto overflow-y-auto max-h-[90vh] custom-scrollbar">
+      <h2 className="text-xl sm:text-2xl font-heading font-bold mb-2">
         {initialData ? 'Edit Drive' : 'Add New Drive'}
       </h2>
+
+      {submitError && (
+        <div role="alert" aria-live="polite" className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-600">
+          {submitError}
+        </div>
+      )}
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {/* Company Name */}
         <div className="flex flex-col gap-1 md:col-span-2">
           <label className="text-sm font-medium">Company Name <span className="text-red-500">*</span></label>
@@ -208,12 +236,12 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 mt-4">
+      <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 mt-2 sm:mt-4">
         {onClose && (
           <button
             type="button"
             onClick={onClose}
-            className="px-6 py-2 rounded-lg border border-border hover:bg-accent transition-colors"
+            className="w-full sm:w-auto px-6 py-3 rounded-lg border border-border hover:bg-accent transition-colors"
           >
             Cancel
           </button>
@@ -221,7 +249,7 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-6 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+          className="w-full sm:w-auto px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
           {isSubmitting ? 'Saving...' : 'Save Drive'}
         </button>
