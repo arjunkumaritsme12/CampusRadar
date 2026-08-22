@@ -8,10 +8,8 @@ import { useState } from 'react'
 import { ThreeDHero } from '@/components/ThreeDHero'
 
 export default function LoginPage() {
-  console.log('DEBUG_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-  console.log('DEBUG_SUPABASE_KEY_EXISTS:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const supabase = createClient()
 
   const handleGoogleLogin = async () => {
@@ -22,7 +20,7 @@ export default function LoginPage() {
         redirectTo: `${location.origin}/auth/callback`,
       },
     })
-    
+
     if (error) {
       console.error(error)
       setIsLoading(false)
@@ -58,7 +56,7 @@ export default function LoginPage() {
               Sign in to your account to continue
             </p>
           </div>
-          
+
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
