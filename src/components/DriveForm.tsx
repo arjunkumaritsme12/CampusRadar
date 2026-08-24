@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm, FieldErrors } from 'react-hook-form'
+import { useForm, FieldErrors, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { driveSchema, Drive } from '@/lib/schema'
 import { createDrive, updateDrive } from '@/app/actions'
@@ -15,7 +15,7 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<Drive>({
     resolver: zodResolver(driveSchema) as any,
@@ -26,8 +26,8 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
     },
   })
 
-  const hasBond = watch('bond')
-  const employmentType = watch('employment_type')
+  const hasBond = useWatch({ control, name: 'bond', defaultValue: false })
+  const employmentType = useWatch({ control, name: 'employment_type', defaultValue: 'Full Time' })
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true)
