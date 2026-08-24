@@ -118,6 +118,7 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
             <option value="Missed">Missed</option>
             <option value="Rejected">Rejected</option>
             <option value="Selected">Selected</option>
+            <option value="Cancelled">Cancelled</option>
           </select>
         </div>
 

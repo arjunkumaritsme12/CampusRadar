@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { EditDriveButton } from '@/components/EditDriveButton'
+import { DeleteDriveButton } from '@/components/DeleteDriveButton'
 
 export default async function ListPage() {
   const supabase = await createClient()
@@ -46,9 +47,10 @@ export default async function ListPage() {
                   <td className="p-4 text-sm text-secondary-foreground/80">{drive.role}</td>
                   <td className="p-4">
                     <span className={`text-xs px-2 py-1 rounded-full font-medium inline-block ${
-                      drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' : 
+                      drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' :
                       drive.status === 'Selected' ? 'bg-green-500/20 text-green-600' :
                       drive.status === 'Rejected' ? 'bg-red-500/20 text-red-600' :
+                      drive.status === 'Cancelled' ? 'bg-gray-500/20 text-gray-600' :
                       'bg-primary/20 text-primary'
                     }`}>
                       {drive.status}
@@ -62,6 +64,7 @@ export default async function ListPage() {
                         View Details
                       </Link>
                       <EditDriveButton drive={drive} />
+                      <DeleteDriveButton drive={drive} />
                     </div>
                   </td>
                 </tr>
@@ -86,9 +89,10 @@ export default async function ListPage() {
                   <p className="text-sm text-secondary-foreground/70 truncate">{drive.role}</p>
                 </div>
                 <span className={`text-[10px] px-2 py-1 rounded-full font-medium whitespace-nowrap ${
-                  drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' : 
+                  drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' :
                   drive.status === 'Selected' ? 'bg-green-500/20 text-green-600' :
                   drive.status === 'Rejected' ? 'bg-red-500/20 text-red-600' :
+                  drive.status === 'Cancelled' ? 'bg-gray-500/20 text-gray-600' :
                   'bg-primary/20 text-primary'
                 }`}>
                   {drive.status}
@@ -112,6 +116,9 @@ export default async function ListPage() {
                 </Link>
                 <div className="flex-1 flex justify-center">
                   <EditDriveButton drive={drive} />
+                </div>
+                <div className="flex-1 flex justify-center">
+                  <DeleteDriveButton drive={drive} />
                 </div>
               </div>
             </div>

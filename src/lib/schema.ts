@@ -9,6 +9,7 @@ export const driveStatusEnum = z.enum([
   'Rejected',
   'Selected',
   'Registration Error',
+  'Cancelled',
 ]);
 
 export const employmentTypeEnum = z.enum(['Full Time', 'Internship']);

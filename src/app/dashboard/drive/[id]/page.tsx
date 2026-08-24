@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Calendar as CalendarIcon, Briefcase, FileText, Clock } from 'lucide-react'
 import { EditDriveButton } from '@/components/EditDriveButton'
+import { DeleteDriveButton } from '@/components/DeleteDriveButton'
 
 export default async function DriveDetail({ params }: { params: { id: string } }) {
   const supabase = await createClient()
@@ -48,12 +49,14 @@ export default async function DriveDetail({ params }: { params: { id: string } }
             drive.status === 'Rejected' ? 'bg-red-500/20 text-red-600' :
             drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' :
             drive.status === 'Registration Error' ? 'bg-red-500/20 text-red-600' :
+            drive.status === 'Cancelled' ? 'bg-gray-500/20 text-gray-600' :
             'bg-primary/20 text-primary'
           }`}>
             {drive.status}
           </span>
-          <div className="w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
             <EditDriveButton drive={drive} variant="full" />
+            <DeleteDriveButton drive={drive} variant="full" />
           </div>
         </div>
       </div>

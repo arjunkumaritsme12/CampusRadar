@@ -81,7 +81,11 @@ export default async function DashboardPage() {
                     <p className="text-sm text-secondary-foreground/70 truncate">{drive.role}</p>
                   </div>
                   <span className={`text-[10px] sm:text-xs px-2 py-1 rounded-full font-medium whitespace-nowrap ${
-                    drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' : 'bg-primary/20 text-primary'
+                    drive.status === 'Rescheduled' ? 'bg-orange-500/20 text-orange-600' :
+                    drive.status === 'Selected' ? 'bg-green-500/20 text-green-600' :
+                    drive.status === 'Rejected' ? 'bg-red-500/20 text-red-600' :
+                    drive.status === 'Cancelled' ? 'bg-gray-500/20 text-gray-600' :
+                    'bg-primary/20 text-primary'
                   }`}>
                     {drive.status}
                   </span>
