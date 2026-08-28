@@ -1,8 +1,8 @@
 'use client'
 
 import { createClient } from '@/lib/supabase/client'
-import { Briefcase } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
 import { ThreeDHero } from '@/components/ThreeDHero'
@@ -51,7 +51,7 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm flex flex-col gap-8">
           <div className="flex flex-col gap-2 text-center lg:text-left">
             <Link href="/" className="flex items-center gap-2 justify-center lg:justify-start mb-6">
-              <Briefcase className="h-8 w-8 text-primary" />
+              <Image src="/logo-premium.jpg" alt="Campus Radar Logo" width={36} height={36} className="rounded-xl object-cover" />
               <span className="font-heading font-bold text-2xl tracking-tight">Placement Tracker</span>
             </Link>
             <h1 className="text-3xl font-heading font-bold tracking-tight">Welcome back</h1>

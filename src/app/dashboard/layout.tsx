@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Briefcase, LayoutDashboard, List, Calendar, LogOut, Plus, Sparkles, Command } from 'lucide-react'
+import { LayoutDashboard, List, Calendar, LogOut, Plus, Sparkles, Command } from 'lucide-react'
+import Image from 'next/image'
 import { logout } from '@/app/actions'
 import { useState, useEffect } from 'react'
 import { DriveForm } from '@/components/DriveForm'
@@ -50,9 +51,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         <div className="h-16 flex items-center px-5 border-b relative z-10" style={{ borderColor: 'var(--border)' }}>
           <Link className="flex items-center gap-2.5" href="/">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center fab-shadow"
-              style={{ background: 'var(--primary)' }}>
-              <Briefcase className="h-4.5 w-4.5 text-white" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden fab-shadow">
+              <Image src="/logo-premium.jpg" alt="Logo" width={32} height={32} className="object-cover w-full h-full" />
             </div>
             <div className="leading-tight">
               <div className="font-heading font-bold text-[15px] tracking-tight" style={{ color: 'var(--ink)' }}>CampusRadar</div>
@@ -193,9 +193,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <header className="md:hidden h-14 flex items-center justify-between px-4 border-b bg-background/95 backdrop-blur-sm sticky top-0 z-20"
           style={{ borderColor: 'var(--border)' }}>
           <Link className="flex items-center gap-2" href="/">
-            <div className="w-7 h-7 rounded-md flex items-center justify-center fab-shadow"
-              style={{ background: 'var(--primary)' }}>
-              <Briefcase className="h-4 w-4 text-white" />
+            <div className="w-7 h-7 rounded-md flex items-center justify-center overflow-hidden fab-shadow">
+              <Image src="/logo-premium.jpg" alt="Logo" width={28} height={28} className="object-cover w-full h-full" />
             </div>
             <span className="font-heading font-bold text-base">CampusRadar</span>
           </Link>

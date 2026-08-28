@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, Briefcase } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-6 lg:px-8 h-16 flex items-center border-b border-border/40 glass sticky top-0 z-50">
         <Link className="flex items-center justify-center gap-2" href="/">
-          <Briefcase className="h-6 w-6 text-primary" />
+          <Image src="/logo-premium.jpg" alt="Campus Radar Logo" width={32} height={32} className="rounded-lg object-cover" />
           <span className="font-heading font-bold text-xl tracking-tight">Placement Tracker</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
