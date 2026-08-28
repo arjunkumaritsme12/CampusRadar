@@ -40,10 +40,18 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-border/40">
+      <footer className="flex flex-col gap-4 sm:flex-row py-6 w-full shrink-0 items-center justify-between px-4 md:px-8 border-t border-border/40 bg-background/50 backdrop-blur-sm z-10 relative">
         <p className="text-xs text-secondary-foreground/60">
-          © 2024 Placement Tracker. All rights reserved.
+          © {new Date().getFullYear()} Campus Radar (Placement Tracker). All rights reserved.
         </p>
+        <div className="flex gap-4 sm:gap-6">
+          <Link className="text-xs hover:text-primary transition-colors text-secondary-foreground/80 hover:underline" href="/privacy">
+            Privacy Policy
+          </Link>
+          <Link className="text-xs hover:text-primary transition-colors text-secondary-foreground/80 hover:underline" href="/terms">
+            Terms of Service
+          </Link>
+        </div>
       </footer>
     </div>
   );

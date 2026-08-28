@@ -112,6 +112,7 @@ export function DriveForm({ initialData, onClose }: { initialData?: Drive, onClo
           >
             <option value="Upcoming">Upcoming</option>
             <option value="Registered">Registered</option>
+            <option value="Permitted">Permitted</option>
             <option value="Registration Error">Registration Error</option>
             <option value="Rescheduled">Rescheduled</option>
             <option value="Completed">Completed</option>

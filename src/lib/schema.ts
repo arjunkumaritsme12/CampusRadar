@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const driveStatusEnum = z.enum([
   'Upcoming',
   'Registered',
+  'Permitted',
   'Rescheduled',
   'Completed',
   'Missed',
